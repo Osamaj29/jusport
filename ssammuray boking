@@ -1,0 +1,131 @@
+<?php
+session_start();
+
+// Check login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// DB Connection
+$conn = new mysqli("localhost", "root", "", "sport_booking");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$user_id = $_SESSION['user_id'];
+$booking_id = $_GET['booking_id'] ?? null;
+
+if (!$booking_id) {
+    die("Invalid booking request.");
+}
+
+// Fetch this booking with facility + user info
+$stmt = $conn->prepare("
+    SELECT 
+        COALESCE(u.name, u.email) AS user_name, 
+        f.facility_name, 
+        f.venue_name, 
+        b.booking_date, 
+        b.booking_time, 
+        b.status
+    FROM bookings b
+    LEFT JOIN facilities f ON b.facility_id = f.id
+    LEFT JOIN users u ON b.user_id = u.id
+    WHERE b.id = ? AND b.user_id = ?
+    LIMIT 1
+");
+$stmt->bind_param("ii", $booking_id, $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$booking = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Summary | Jeddah University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #002855;
+      margin-bottom: 30px;
+    }
+    .summary {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #333;
+    }
+    .summary strong {
+      color: #002855;
+    }
+    .card {
+      background: #f9fafc;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 24px;
+      background: #002855;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .btn:hover {
+      background: #004080;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Booking Summary</h1>
+
+  <?php if ($booking): ?>
+    <div class="card">
+      <p class="summary"><strong>Name:</strong> <?= htmlspecialchars($booking['user_name']) ?></p>
+      <p class="summary"><strong>Facility:</strong> <?= htmlspecialchars($booking['facility_name'] ?? 'Unknown Facility') ?></p>
+      <p class="summary"><strong>Venue:</strong> <?= htmlspecialchars($booking['venue_name'] ?? 'Unknown Venue') ?></p>
+      <p class="summary"><strong>Date:</strong> <?= htmlspecialchars($booking['booking_date']) ?></p>
+      <p class="summary"><strong>Time:</strong> <?= htmlspecialchars($booking['booking_time']) ?></p>
+      <p class="summary"><strong>Status:</strong> 
+        <span style="color:green; font-weight:bold;">Approved</span>
+      </p>
+    </div>
+    <div style="text-align:center;">
+      <a href="my_orders.php" class="btn">Back to My Bookings</a>
+    </div>
+  <?php else: ?>
+    <p style="text-align:center; color:#777;">Booking not found or not approved.</p>
+    <div style="text-align:center;">
+      <a href="my_orders.php" class="btn">Back to My Bookings</a>
+    </div>
+  <?php endif; ?>
+</div>
+
+</body>
+</html>

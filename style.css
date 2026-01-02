@@ -1,0 +1,194 @@
+/* style.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #e9f1f8; /* Add a light blue background color */
+  background-image: url('center.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: contain; /* 'small' is invalid; use contain or a fixed size like 200px */
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.navbar .logo {
+  font-weight: 700;
+  font-size: 24px;
+  display: inline-block;
+}
+
+.navbar nav {
+  float: right;
+}
+
+.navbar nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+}
+
+.navbar .btn {
+  background-color: #f60;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.navbar .btn-secondary {
+  background-color: #555;
+}
+
+.hero {
+  background: linear-gradient(to right, #0077b6, #00b4d8); /* beautiful blue gradient */
+  padding: 80px 0;
+  text-align: center;
+  color: #fff; /* make text white for contrast */
+}
+
+.hero h2,
+.hero p {
+  color: #fff; /* ensures both headline and paragraph are readable */
+}
+
+.hero h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #f60;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.venues {
+  padding: 60px 0;
+}
+
+.venue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.venue-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+}
+
+.venue-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.venue-card h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.tags {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-decoration: none;
+  background: #eee;
+  color: #6b1e1e;
+}
+
+.btn-sm.btn-primary {
+  background: #f60;
+  color: #fff;
+}
+
+.footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1 0;
+  margin-top: 40px;
+}
+.intro-title {
+  background-color: #f4f4f4;
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+.intro-title h1 {
+  font-size: 2.5rem;
+  color: #002855;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-family: 'Inter', sans-serif;
+}
+
+.intro-title p {
+  font-size: 1.2rem;
+  color: #444;
+  font-weight: 400;
+}
+.corner-title {
+  position: absolute;
+  top: 20px;
+  left: 20px; /* Change to `right: 20px;` to move it to top-right */
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.corner-title h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #002855;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+
